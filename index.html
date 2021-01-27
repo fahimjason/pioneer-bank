@@ -27,7 +27,7 @@
             <div class="col-md-4">
                 <div class="deposit status">
                     <h5>Deposit</h5>
-                    <h2>$<span id="current">00</span></h2>
+                    <h2>$<span id="currentDeposit">00</span></h2>
                 </div>
             </div>
             <div class="col-md-4">
@@ -69,7 +69,7 @@
     </div>
 
     <script>
-        //login event handler
+        //login button event handler
         const loginBtn = document.getElementById("logIn");
         loginBtn.addEventListener('click', function () {
             const loginArea = document.getElementById('login-area');
@@ -78,45 +78,47 @@
             transactionArea.style.display = 'block';
         })
 
-        //deposit event handler
+        //deposit button event handler
         const depositBtn = document.getElementById("addDeposit");
         depositBtn.addEventListener("click", function () {
-            const depositAmount = document.getElementById("depositAmount").value;
-            const depositNumber = parseFloat(depositAmount);
+            // const depositAmount = document.getElementById("depositAmount").value;
+            // const depositNumber = parseFloat(depositAmount);
+            const depositNumber = getInputNumber("depositAmount")
 
-            const currentAmount = document.getElementById("current").innerText;
-            const currentNumber = parseFloat(currentAmount);
-            const totalAmount = depositNumber + currentNumber;
+            // const currentAmount = document.getElementById("currentDeposit").innerText;
+            // const currentNumber = parseFloat(currentAmount);
+            // const totalAmount = depositNumber + currentNumber;
+            // document.getElementById("current").innerText = totalAmount;
 
-            document.getElementById("current").innerText = totalAmount;
+            updateSpanText("currentDeposit", depositNumber)
+            updateSpanText("balance", depositNumber)
+
             document.getElementById("depositAmount").value = "";
-
-            const currentBalance = document.getElementById("balance").innerText;
-            const balanceNumber = parseFloat(currentBalance);
-            const totalBalance = depositNumber + balanceNumber;
-
-            document.getElementById("balance").innerText = totalBalance;
         })
 
-        //withdraw event handler
+        //withdraw button event handler
         const withdrawBtn = document.getElementById("addWithdraw");
         withdrawBtn.addEventListener("click", function () {
-            const withdrawAmount = document.getElementById("withdrawAmount").value;
-            const withdrawNumber = parseFloat(withdrawAmount);
+            const withdrawNumber = getInputNumber("withdrawAmount");
 
-            const currentWithdraw = document.getElementById("currentWithdraw").innerText;
-            const currentWithdrawNumber = parseFloat(currentWithdraw);
-            const totalWithdraw = withdrawNumber + currentWithdrawNumber;
+            updateSpanText("currentWithdraw", withdrawNumber);
+            updateSpanText("balance", -1 * withdrawNumber);
 
-            document.getElementById("currentWithdraw").innerText = totalWithdraw;
             document.getElementById("withdrawAmount").value = "";
-
-            const currentBalance = document.getElementById("balance").innerText;
-            const balanceNumber = parseFloat(currentBalance);
-            const totalBalance = balanceNumber - withdrawNumber;
-
-            document.getElementById("balance").innerText = totalBalance;
         })
+
+        function getInputNumber(id) {
+            const amount = document.getElementById(id).value;
+            const amountNumber = parseFloat(amount);
+            return amountNumber;
+        }
+
+        function updateSpanText(id, addNumber) {
+            const current = document.getElementById(id).innerText;
+            const currentNumber = parseFloat(current);
+            const total = addNumber + currentNumber;
+            document.getElementById(id).innerText = total;
+        }
     </script>
 </body>
 
