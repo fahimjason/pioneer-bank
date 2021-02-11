@@ -90,9 +90,13 @@
             // const totalAmount = depositNumber + currentNumber;
             // document.getElementById("current").innerText = totalAmount;
 
-            updateSpanText("currentDeposit", depositNumber)
-            updateSpanText("balance", depositNumber)
-
+            if (depositNumber < 0) {
+                alert('Deposit number can\'t be negative');
+            }
+            else {
+                updateSpanText("currentDeposit", depositNumber)
+                updateSpanText("balance", depositNumber)
+            }
             document.getElementById("depositAmount").value = "";
         })
 
@@ -100,10 +104,13 @@
         const withdrawBtn = document.getElementById("addWithdraw");
         withdrawBtn.addEventListener("click", function () {
             const withdrawNumber = getInputNumber("withdrawAmount");
-
-            updateSpanText("currentWithdraw", withdrawNumber);
-            updateSpanText("balance", -1 * withdrawNumber);
-
+            if (withdrawNumber < 0) {
+                alert('Withdraw number can\'t be negative');
+            }
+            else {
+                updateSpanText("currentWithdraw", withdrawNumber);
+                updateSpanText("balance", -1 * withdrawNumber);
+            }
             document.getElementById("withdrawAmount").value = "";
         })
 
